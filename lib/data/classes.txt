@@ -1,0 +1,18 @@
+CIS 015
+color_rgb(150,200,255)
+CIS 090
+color_rgb(100,180,255)
+CIS 115
+color_rgb(50,150,255)
+CIS 200
+color_rgb(102,102,255)
+MATH 222
+color_rgb(150,255,150)
+ECON 110
+color_rgb(255,255,155)
+COMM 105
+color_rgb(240,128,128)
+KSTATE
+color_rgb(150,50,255)
+Other
+color_rgb(235,236,236)
