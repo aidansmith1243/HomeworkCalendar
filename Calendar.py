@@ -6,36 +6,48 @@ import datetime
 from prefs import *
 
 class Month:
-    def __init__(self,month,day,year,topLeftPoint,bottomRightPoint):
+    def __init__(self,month,day,year,topLeftPoint,bottomRightPoint,row = 0):
         
         self.month = month
         self.day = day
         self.year = year
-
-        self.dates = createDates(month,0,year)
-
+        
+        dm = DateMaker()
+        self.dates = dm.createYear(year)
+        self.row = row
+        if self.row == 0:
+            for r in self.dates:
+                for c in r: 
+                    if c[0] == month and c[1] == day and c[2] == year:
+                        break
+                if c[0] == month and c[1] == day and c[2] == year:
+                    break
+                self.row += 1
+        
         self.calendar = []
         height = bottomRightPoint.getY() - topLeftPoint.getY()
         x1 = topLeftPoint.getX()
         x2 = bottomRightPoint.getX()
         y1 = topLeftPoint.getY()-height/5
         y2 = topLeftPoint.getY()
-        for i in range(len(self.dates)):
+        for i in range(self.row-1,self.row+5):
             tempW = []
             tempD = []
             tempY = []
             
             for j in range(7):
-                if i == 0 and j < getStartingIndex(self.dates):
-                    m,y = monthConversion(self.month-1,self.year)
-                elif i == 4 and j >= getEndingIndex(self.dates):
-                    m,y = monthConversion(self.month+1,self.year)
-                else:
-                    m = self.month
-                    y = self.year
-                tempW.append(m)
-                tempD.append(self.dates[i][j])
-                tempY.append(y)
+                #if i == 0 and j < getStartingIndex(self.dates):
+                #    m,y = monthConversion(self.month-1,self.year)
+                #elif i == 4 and j >= getEndingIndex(self.dates):
+                #    m,y = monthConversion(self.month+1,self.year)
+                #else:
+                #    m = self.month
+                #    y = self.year
+#                 print str(i) + ' . ' + str(j)
+#                 print len(self.dates)
+                tempW.append(self.dates[i][j][0])
+                tempD.append(self.dates[i][j][1])
+                tempY.append(self.dates[i][j][2])
 
             y1 += height/5
             y2 += height/5
@@ -49,8 +61,9 @@ class Month:
     def addItem(self,i):
         for x in self.calendar:
             x.addItem(i)
+    def getRow(self):
+        return self.row
                 
-        
     def draw(self,win):
         '''
         Draw the Month calendar to the window.
