@@ -1028,7 +1028,7 @@ class SelectFromList:
         #b.setTextColor(text)
         q = 75#150
 #         b.setFill(color,color_rgb(q,q,q))
-        b.setFill(color, COMPLETED_ITEM_COLOR)
+        b.setFill(color, PREFS.COMPLETED_ITEM_COLOR)
         self.list.append(b)
         self.serialList.append(serial)
         self.numItems += 1
@@ -1046,7 +1046,7 @@ class SelectFromList:
             #else:
                 #b.setFill(prefs.COMPLETED_ITEM_COLOR)
 #             b.setFill(i.color,color_rgb(q,q,q))
-            b.setFill(i.color, COMPLETED_ITEM_COLOR)
+            b.setFill(i.color, PREFS.COMPLETED_ITEM_COLOR)
             b.setTextColor(i.textColor)
             temp.append(b)
             count+=1

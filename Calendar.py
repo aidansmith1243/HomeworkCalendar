@@ -3,7 +3,7 @@ from DateMaker import *
 from ReadWrite import *
 import prefs
 import datetime
-from prefs import DATA_FILE
+from prefs import *
 
 class Month:
     def __init__(self,month,day,year,topLeftPoint,bottomRightPoint):
@@ -41,7 +41,7 @@ class Month:
             y2 += height/5
             self.calendar.append(Week(tempW,tempD,tempY,month,Point(x1,y1),Point(x2,y2)))
             
-        data = importData(DATA_FILE)
+        data = importData(PREFS.DATA_FILE)
         for i in data:
             #if(i[0] != '/' and i[-1] != '/'):
             self.addItem(i)
@@ -138,9 +138,9 @@ class Day:
         self.box = Button('',5,topLeftPoint,bottomRightPoint)
         now = datetime.datetime.now()
         if now.day == day and now.year == year and now.month == month:
-            self.box.setFill(prefs.TODAY_COLOR)
+            self.box.setFill(PREFS.TODAY_COLOR)
         elif(self.month != viewMonth):
-            self.box.setFill(prefs.OTHER_MONTH_COLOR)
+            self.box.setFill(PREFS.OTHER_MONTH_COLOR)
         self.dayLabel = Text(Point(bottomRightPoint.getX()-10,topLeftPoint.getY()+8),str(day))
         self.list = SelectFromList(Point(topLeftPoint.getX(),topLeftPoint.getY()+15),bottomRightPoint.getX()-topLeftPoint.getX(),13,11)
         
@@ -151,9 +151,9 @@ class Day:
         if(i[0] != '/'):
             if(self.day == int(i[2]) and self.month == int(i[1]) and self.year == int(i[3])):
                 if i[-1] != '/':
-                    self.list.add(i[-1], eval(prefs.CLASSES[i[0]]),i)
+                    self.list.add(i[-1], eval(PREFS.CLASSES[i[0]]),i)
                 else:
-                    self.list.add(i[-2], eval(prefs.CLASSES[i[0]]),i,complete=True)
+                    self.list.add(i[-2], eval(PREFS.CLASSES[i[0]]),i,complete=True)
                 
     def uncheckSelected(self):
         self.list.uncheckSelected()
@@ -173,8 +173,8 @@ class Day:
         """
         Draws the day to the window.
         """
-        self.box.setOutline(prefs.BLACK)
-        self.dayLabel.setTextColor(prefs.BLACK)
+        self.box.setOutline(PREFS.BLACK)
+        self.dayLabel.setTextColor(PREFS.BLACK)
         
         
         self.box.draw(win)
@@ -192,14 +192,14 @@ def createLegend():
     width = 80
     height = 13
     count = 0
-    for i in CLASSES:
+    for i in PREFS.CLASSES:
         x1 = 0 + count/3 * width
         x2 = width + count/3 * width
         y1 = 0 + count%3 * height
         y2 = height + count%3 * height
         
         temp = Button(i,11,Point(x1,y1),Point(x2,y2))
-        temp.setFill(eval(CLASSES[i]))
+        temp.setFill(eval(PREFS.CLASSES[i]))
         legend.append(temp)
         count+=1
     return legend
@@ -208,10 +208,10 @@ def createDayHeader():
     width = 800
     w = width/7
     count = 0
-    for i in DAY_HEADER:
+    for i in PREFS.DAY_HEADER:
         temp = Text(Point((width/14)+count*w,50),i)
         temp.setSize(12)
-        temp.setTextColor(BLACK)
+        temp.setTextColor(PREFS.BLACK)
         arr.append(temp)
         count+=1 
     return arr

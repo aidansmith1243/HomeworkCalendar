@@ -1,5 +1,5 @@
 import Graphics as g
-from GraphScreen import *
+# from GraphScreen import *
 from Graphics import *
 from AddItem import *
 from Calendar import *
@@ -27,7 +27,7 @@ class GraphScreen:
         
         self.g = g
         self.win = g.GraphWin(name,width,height)
-        self.win.setBackground(WHITE)
+        self.win.setBackground(PREFS.WHITE)
         
     def __str__(self):
         return str([self.isOpen,self.items,self.actions])
@@ -212,6 +212,7 @@ class Window(GraphScreen):
         self.createItems()
         self.updateCalendar()
         
+        
     def run(self):
         if self.isOpen:
             mouse = self.win.checkMouse()
@@ -239,9 +240,9 @@ class Window(GraphScreen):
     
     def createItems(self):
         self.calendar = Month(self.month,self.day,self.year,Point(0,60),Point(self.width,self.height))
-        self.title = Text(Point(self.width/2,25),str(MONTH_NAMES[self.month]) + " " + str(self.year))
+        self.title = Text(Point(self.width/2,25),str(PREFS.MONTH_NAMES[self.month]) + " " + str(self.year))
         self.title.setSize(25)
-        self.title.setTextColor(BLACK)
+        self.title.setTextColor(PREFS.BLACK)
         self.header = createDayHeader()
         self.legend = createLegend()
         
@@ -256,9 +257,12 @@ class Window(GraphScreen):
         self.addAction('x',self.cut)
         self.addAction('Right',self.nextMonth)
         self.addAction('Left',self.prevMonth)
+        self.addAction('d',self.darkMode)
 
     def updateCalendar(self):
         self.win.pause()
+        
+        self.win.setBackground(PREFS.WHITE)
         
         # undraw Items
         self.calendar.undraw()
@@ -291,11 +295,11 @@ class Window(GraphScreen):
         
     
     def remove(self):
-        removeItem(DATA_FILE, self.selectedItem)
+        removeItem(PREFS.DATA_FILE, self.selectedItem)
         self.updateCalendar()
         
     def complete(self):
-        completeItem(DATA_FILE, self.selectedItem)
+        completeItem(PREFS.DATA_FILE, self.selectedItem)
         self.updateCalendar()
         
     def viewToday(self):
@@ -310,7 +314,7 @@ class Window(GraphScreen):
             temp[1] = str(self.dayClicked[0])
             temp[2] = str(self.dayClicked[1])
             temp[3] = str(self.dayClicked[2])
-            addItem(DATA_FILE, temp)
+            addItem(PREFS.DATA_FILE, temp)
             self.updateCalendar()
         
     def cut(self):
@@ -329,7 +333,14 @@ class Window(GraphScreen):
         self.month,self.year = monthConversion(self.month-1, self.year)
         self.updateCalendar()
             
-
+    def darkMode(self):
+        
+        if PREFS.DARK_MODE:
+            PREFS.setDarkMode(False)
+        else:
+            PREFS.setDarkMode(True)
+        self.updateCalendar()
+        
     ''' All Keyboard Button Actions '''
     '''-----------------------------'''
     
