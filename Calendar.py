@@ -15,6 +15,7 @@ class Month:
         dm = DateMaker()
         self.dates = dm.createYear(year)
         self.row = row
+        
         if self.row == 0:
             for r in self.dates:
                 for c in r: 
@@ -23,7 +24,7 @@ class Month:
                 if c[0] == month and c[1] == day and c[2] == year:
                     break
                 self.row += 1
-        
+            
         self.calendar = []
         height = bottomRightPoint.getY() - topLeftPoint.getY()
         x1 = topLeftPoint.getX()
@@ -36,15 +37,6 @@ class Month:
             tempY = []
             
             for j in range(7):
-                #if i == 0 and j < getStartingIndex(self.dates):
-                #    m,y = monthConversion(self.month-1,self.year)
-                #elif i == 4 and j >= getEndingIndex(self.dates):
-                #    m,y = monthConversion(self.month+1,self.year)
-                #else:
-                #    m = self.month
-                #    y = self.year
-#                 print str(i) + ' . ' + str(j)
-#                 print len(self.dates)
                 tempW.append(self.dates[i][j][0])
                 tempD.append(self.dates[i][j][1])
                 tempY.append(self.dates[i][j][2])
@@ -55,7 +47,6 @@ class Month:
             
         data = importData(PREFS.DATA_FILE)
         for i in data:
-            #if(i[0] != '/' and i[-1] != '/'):
             self.addItem(i)
 
     def addItem(self,i):
@@ -152,12 +143,14 @@ class Day:
         now = datetime.datetime.now()
         if now.day == day and now.year == year and now.month == month:
             self.box.setFill(PREFS.TODAY_COLOR)
-        elif(self.month != viewMonth):
+        elif(self.month != viewMonth or self.year != now.year):
             self.box.setFill(PREFS.OTHER_MONTH_COLOR)
         self.dayLabel = Text(Point(bottomRightPoint.getX()-10,topLeftPoint.getY()+8),str(day))
         self.list = SelectFromList(Point(topLeftPoint.getX(),topLeftPoint.getY()+15),bottomRightPoint.getX()-topLeftPoint.getX(),13,11)
-        
-        self.firstLabel = Text(Point((topLeftPoint.getX()+(bottomRightPoint.getX()-topLeftPoint.getX())/2),topLeftPoint.getY()+7),PREFS.MONTH_NAMES[month])
+        if(self.day == 1):
+            self.firstLabel = Text(Point((topLeftPoint.getX()+(bottomRightPoint.getX()-topLeftPoint.getX())/2),topLeftPoint.getY()+7),PREFS.MONTH_NAMES[month])
+        else:
+            self.firstLabel = Text(Point((topLeftPoint.getX()+(bottomRightPoint.getX()-topLeftPoint.getX())/2),topLeftPoint.getY()+7),'')
         self.firstLabel.setSize(10)
         self.firstLabel.setTextColor(PREFS.BLACK)
         
@@ -205,7 +198,6 @@ class Day:
         self.box.undraw()
         self.dayLabel.undraw()
         self.list.undraw()
-        print self.day
         if(self.day == 1):
             self.firstLabel.undraw()
         
