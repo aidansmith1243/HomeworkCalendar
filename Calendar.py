@@ -6,36 +6,40 @@ import datetime
 from prefs import *
 
 class Month:
-    def __init__(self,month,day,year,topLeftPoint,bottomRightPoint):
+    def __init__(self,month,day,year,topLeftPoint,bottomRightPoint,row = 0):
         
         self.month = month
         self.day = day
         self.year = year
-
-        self.dates = createDates(month,0,year)
-
+        
+        dm = DateMaker()
+        self.dates = dm.createYear(year)
+        self.row = row
+        
+        if self.row == 0:
+            for r in self.dates:
+                for c in r: 
+                    if c[0] == month and c[1] == day and c[2] == year:
+                        break
+                if c[0] == month and c[1] == day and c[2] == year:
+                    break
+                self.row += 1
+            
         self.calendar = []
         height = bottomRightPoint.getY() - topLeftPoint.getY()
         x1 = topLeftPoint.getX()
         x2 = bottomRightPoint.getX()
         y1 = topLeftPoint.getY()-height/5
         y2 = topLeftPoint.getY()
-        for i in range(len(self.dates)):
+        for i in range(self.row-1,self.row+5):
             tempW = []
             tempD = []
             tempY = []
             
             for j in range(7):
-                if i == 0 and j < getStartingIndex(self.dates):
-                    m,y = monthConversion(self.month-1,self.year)
-                elif i == 4 and j >= getEndingIndex(self.dates):
-                    m,y = monthConversion(self.month+1,self.year)
-                else:
-                    m = self.month
-                    y = self.year
-                tempW.append(m)
-                tempD.append(self.dates[i][j])
-                tempY.append(y)
+                tempW.append(self.dates[i][j][0])
+                tempD.append(self.dates[i][j][1])
+                tempY.append(self.dates[i][j][2])
 
             y1 += height/5
             y2 += height/5
@@ -43,14 +47,14 @@ class Month:
             
         data = importData(PREFS.DATA_FILE)
         for i in data:
-            #if(i[0] != '/' and i[-1] != '/'):
             self.addItem(i)
 
     def addItem(self,i):
         for x in self.calendar:
             x.addItem(i)
+    def getRow(self):
+        return self.row
                 
-        
     def draw(self,win):
         '''
         Draw the Month calendar to the window.
@@ -139,11 +143,19 @@ class Day:
         now = datetime.datetime.now()
         if now.day == day and now.year == year and now.month == month:
             self.box.setFill(PREFS.TODAY_COLOR)
-        elif(self.month != viewMonth):
+        elif(self.month != viewMonth or self.year != now.year):
             self.box.setFill(PREFS.OTHER_MONTH_COLOR)
         self.dayLabel = Text(Point(bottomRightPoint.getX()-10,topLeftPoint.getY()+8),str(day))
         self.list = SelectFromList(Point(topLeftPoint.getX(),topLeftPoint.getY()+15),bottomRightPoint.getX()-topLeftPoint.getX(),13,11)
+        if(self.day == 1):
+            self.firstLabel = Text(Point((topLeftPoint.getX()+(bottomRightPoint.getX()-topLeftPoint.getX())/2),topLeftPoint.getY()+7),PREFS.MONTH_NAMES[month])
+        else:
+            self.firstLabel = Text(Point((topLeftPoint.getX()+(bottomRightPoint.getX()-topLeftPoint.getX())/2),topLeftPoint.getY()+7),'')
+        self.firstLabel.setSize(10)
+        self.firstLabel.setTextColor(PREFS.BLACK)
         
+            
+            
     def addItem(self,i):
         """
         Adds the given item to the list of items for the current day.
@@ -180,10 +192,14 @@ class Day:
         self.box.draw(win)
         self.dayLabel.draw(win)
         self.list.draw(win)
+        if(self.day == 1):
+            self.firstLabel.draw(win)
     def undraw(self):
         self.box.undraw()
         self.dayLabel.undraw()
         self.list.undraw()
+        if(self.day == 1):
+            self.firstLabel.undraw()
         
         
 

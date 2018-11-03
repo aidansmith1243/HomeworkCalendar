@@ -112,8 +112,8 @@ def createDates(month,day,year):
         
 class DateMaker:
     def createDatesList(self,year,month):
+        month,year = monthConversion(month, year)
         # Create the calendar object where the week starts on Monday
-        #cal = calendar.TextCalendar(calendar.MONDAY)
         cal = calendar.TextCalendar(calendar.SUNDAY)
 
         # Create a str for the month
@@ -161,6 +161,30 @@ class DateMaker:
         return first+second,returnIndex
     def createYear(self,year):
         all = []
+        for i in range(12,13):
+            temp = self.createDatesList(year-1,i)
+            for x in range(len(temp)):
+                for y in range(7):
+                    if temp[x][y] != '' and temp[x][y] != '  ':
+                        temp[x][y] = [i,int(temp[x][y]),year-1]
+            
+            if len(all) > 0:
+                index = 7
+                for z in range(7):
+                    if all[len(all)-1][z] == '':
+                        index = z
+                        break
+                for z in range(index,7):
+                    all[len(all)-1][z] = temp[0][z]
+                if index != 7:
+                    temp.remove(temp[0])
+            
+            for z in temp:
+                all.append(z)
+            try:
+                all.remove(['','','','','','',''])
+            except:
+                pass
         for i in range(1,13):
             temp = self.createDatesList(year,i)
             for x in range(len(temp)):
@@ -185,12 +209,59 @@ class DateMaker:
                 all.remove(['','','','','','',''])
             except:
                 pass
+        for i in range(1,13):
+            temp = self.createDatesList(year+1,i)
+            for x in range(len(temp)):
+                for y in range(7):
+                    if temp[x][y] != '' and temp[x][y] != '  ':
+                        temp[x][y] = [i,int(temp[x][y]),year+1]
             
+            if len(all) > 0:
+                index = 7
+                for z in range(7):
+                    if all[len(all)-1][z] == '':
+                        index = z
+                        break
+                for z in range(index,7):
+                    all[len(all)-1][z] = temp[0][z]
+                if index != 7:
+                    temp.remove(temp[0])
+            
+            for z in temp:
+                all.append(z)
+            try:
+                all.remove(['','','','','','',''])
+            except:
+                pass
+        for i in range(1,2):
+            temp = self.createDatesList(year+2,i)
+            for x in range(len(temp)):
+                for y in range(7):
+                    if temp[x][y] != '' and temp[x][y] != '  ':
+                        temp[x][y] = [i,int(temp[x][y]),year+2]
+            
+            if len(all) > 0:
+                index = 7
+                for z in range(7):
+                    if all[len(all)-1][z] == '':
+                        index = z
+                        break
+                for z in range(index,7):
+                    all[len(all)-1][z] = temp[0][z]
+                if index != 7:
+                    temp.remove(temp[0])
+            
+            for z in temp:
+                all.append(z)
+            try:
+                all.remove(['','','','','','',''])
+            except:
+                pass
         for i in range(len(all)):
             for x in range(7):
                 if all[i][x] != '' and all[i][x] != '  ':
                     all[i][x][0] = int(all[i][x][0])
                 else:
-                    all[i][x] = [0,0]
+                    all[i][x] = [0,0,0]
         return all #[day,month,year]
         
