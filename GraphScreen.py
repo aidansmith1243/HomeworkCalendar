@@ -238,12 +238,13 @@ class Window(GraphScreen):
         return self.isOpen
     
     def createItems(self):
-        if self.row == -1:
+        if self.row == -1: # Creates the view starting at the current day.
             self.calendar = Month(self.month,self.day,self.year,Point(0,60),Point(self.width,self.height))
             self.row = self.calendar.getRow()
         else:
             self.calendar = Month(self.month,self.day,self.year,Point(0,60),Point(self.width,self.height),self.row)
-        self.title = Text(Point(self.width/2,25),str(PREFS.MONTH_NAMES[self.month]) + " " + str(self.year))
+            
+        self.title = Text(Point(self.width/2,25),str(PREFS.MONTH_NAMES[self.calendar.dates[self.row+1][3][0]]) + " " + str(self.year))
         self.title.setSize(25)
         self.title.setTextColor(PREFS.BLACK)
         self.header = createDayHeader()
@@ -310,6 +311,7 @@ class Window(GraphScreen):
     def viewToday(self):
         self.year = self.now.year
         self.month = self.now.month
+        self.row = -1
         self.updateCalendar()
         
     def paste(self):
@@ -331,12 +333,13 @@ class Window(GraphScreen):
         self.savedItem = self.selectedItem
         
     def nextMonth(self):
-        self.month,self.year = monthConversion(self.month+1, self.year)
-        
+        #self.month,self.year = monthConversion(self.month+1, self.year)
+        self.row += 4
         self.updateCalendar()    
         
     def prevMonth(self):
-        self.month,self.year = monthConversion(self.month-1, self.year)
+        #self.month,self.year = monthConversion(self.month-1, self.year)
+        self.row -= 4
         self.updateCalendar()
     def upWeek(self):
         self.row -=1

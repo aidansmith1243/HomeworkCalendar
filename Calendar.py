@@ -157,6 +157,12 @@ class Day:
         self.dayLabel = Text(Point(bottomRightPoint.getX()-10,topLeftPoint.getY()+8),str(day))
         self.list = SelectFromList(Point(topLeftPoint.getX(),topLeftPoint.getY()+15),bottomRightPoint.getX()-topLeftPoint.getX(),13,11)
         
+        self.firstLabel = Text(Point((topLeftPoint.getX()+(bottomRightPoint.getX()-topLeftPoint.getX())/2),topLeftPoint.getY()+7),PREFS.MONTH_NAMES[month])
+        self.firstLabel.setSize(10)
+        self.firstLabel.setTextColor(PREFS.BLACK)
+        
+            
+            
     def addItem(self,i):
         """
         Adds the given item to the list of items for the current day.
@@ -193,10 +199,15 @@ class Day:
         self.box.draw(win)
         self.dayLabel.draw(win)
         self.list.draw(win)
+        if(self.day == 1):
+            self.firstLabel.draw(win)
     def undraw(self):
         self.box.undraw()
         self.dayLabel.undraw()
         self.list.undraw()
+        print self.day
+        if(self.day == 1):
+            self.firstLabel.undraw()
         
         
 
