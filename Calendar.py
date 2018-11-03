@@ -185,3 +185,33 @@ class Day:
         self.dayLabel.undraw()
         self.list.undraw()
         
+        
+
+def createLegend():
+    legend = []
+    width = 80
+    height = 13
+    count = 0
+    for i in CLASSES:
+        x1 = 0 + count/3 * width
+        x2 = width + count/3 * width
+        y1 = 0 + count%3 * height
+        y2 = height + count%3 * height
+        
+        temp = Button(i,11,Point(x1,y1),Point(x2,y2))
+        temp.setFill(eval(CLASSES[i]))
+        legend.append(temp)
+        count+=1
+    return legend
+def createDayHeader():
+    arr = []
+    width = 800
+    w = width/7
+    count = 0
+    for i in DAY_HEADER:
+        temp = Text(Point((width/14)+count*w,50),i)
+        temp.setSize(12)
+        temp.setTextColor(BLACK)
+        arr.append(temp)
+        count+=1 
+    return arr

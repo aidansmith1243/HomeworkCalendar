@@ -1,3 +1,4 @@
+from prefs import *
 # graphics.py
 """Simple object oriented graphics library  
 
@@ -1026,7 +1027,8 @@ class SelectFromList:
         b = Button(label,self.textSize,Point(self.topLeftPoint.getX(),y),Point(self.topLeftPoint.getX()+self.length,y+self.eachHeight),complete)
         #b.setTextColor(text)
         q = 75#150
-        b.setFill(color,color_rgb(q,q,q))
+#         b.setFill(color,color_rgb(q,q,q))
+        b.setFill(color, COMPLETED_ITEM_COLOR)
         self.list.append(b)
         self.serialList.append(serial)
         self.numItems += 1
@@ -1043,7 +1045,8 @@ class SelectFromList:
                 #b.setFill(i.color)
             #else:
                 #b.setFill(prefs.COMPLETED_ITEM_COLOR)
-            b.setFill(i.color,color_rgb(q,q,q))
+#             b.setFill(i.color,color_rgb(q,q,q))
+            b.setFill(i.color, COMPLETED_ITEM_COLOR)
             b.setTextColor(i.textColor)
             temp.append(b)
             count+=1

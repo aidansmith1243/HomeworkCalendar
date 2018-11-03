@@ -1,12 +1,14 @@
-from Graphics import *
 from ReadWrite import *
+
+def color_rgb(r,g,b):
+    """r,g,b are intensities of red, green, and blue in range(256)
+    Returns color specifier string for the resulting color"""
+    return "#%02x%02x%02x" % (r,g,b)
 
 DATA_FILE = 'lib/data/data.txt'
 CLASS_FILE = 'lib/data/classes.txt'
-# EVENTS_FILE = 'lib/data/events.txt'
-# CLASS_FILE_NEW = 'lib/data/classes_new.txt'
 
-DARK_MODE = True;
+DARK_MODE = False;
 
 MONTH_NAMES = {1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',7:'July',8:'August',9:'September',10:'October',11:'November',12:'December'}
 DAY_HEADER = ['SUN','MON','TUE','WED','THU','FRI','SAT']
@@ -35,7 +37,7 @@ else:
     
     WHITE = color_rgb(0,0,0)
 
-""" My Methods """
+""" My Methods 
 
 def createLegend():
     legend = []
@@ -65,3 +67,4 @@ def createDayHeader():
         arr.append(temp)
         count+=1 
     return arr
+    """

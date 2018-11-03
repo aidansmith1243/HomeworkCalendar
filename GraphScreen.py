@@ -305,12 +305,13 @@ class Window(GraphScreen):
         
     def paste(self):
         #Fix
-        temp = self.savedItem
-        temp[1] = str(self.dayClicked[0])
-        temp[2] = str(self.dayClicked[1])
-        temp[3] = str(self.dayClicked[2])
-        addItem(DATA_FILE, temp)
-        self.updateCalendar()
+        if len(self.savedItem) > 0:
+            temp = self.savedItem
+            temp[1] = str(self.dayClicked[0])
+            temp[2] = str(self.dayClicked[1])
+            temp[3] = str(self.dayClicked[2])
+            addItem(DATA_FILE, temp)
+            self.updateCalendar()
         
     def cut(self):
         self.savedItem = self.selectedItem
