@@ -333,11 +333,12 @@ class Window(GraphScreen):
         self.updateCalendar()
             
     def darkMode(self):
-        
         if PREFS.DARK_MODE:
             PREFS.setDarkMode(False)
+            setSetting(PREFS.SETTINGS_FILE,'PREFS.DARK_MODE',False)
         else:
             PREFS.setDarkMode(True)
+            setSetting(PREFS.SETTINGS_FILE,'PREFS.DARK_MODE',True)
         self.updateCalendar()
         
     ''' All Keyboard Button Actions '''

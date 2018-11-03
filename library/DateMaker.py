@@ -161,12 +161,12 @@ class DateMaker:
         return first+second,returnIndex
     def createYear(self,year):
         all = []
-        for i in range(1,5):
+        for i in range(1,13):
             temp = self.createDatesList(year,i)
             for x in range(len(temp)):
                 for y in range(7):
                     if temp[x][y] != '' and temp[x][y] != '  ':
-                        temp[x][y] = [temp[x][y],i]
+                        temp[x][y] = [i,int(temp[x][y]),year]
             
             if len(all) > 0:
                 index = 7

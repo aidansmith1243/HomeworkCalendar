@@ -1,3 +1,27 @@
+def importSettings(fileName):
+    file = ReadWrite(fileName)
+    data = file.read()
+    temp = []
+    for i in data:
+        temp.append(seperate(i,'='))
+    data = temp
+    return data
+def getSetting(fileName, setting):
+    set = importSettings(fileName)
+    for i in set:
+        if i[0] == setting:
+            return i[1]
+def setSetting(fileName,setting,val):
+    set = importSettings(fileName)
+    for i in set:
+        if i[0] == setting:
+            i[1] = str(val)
+    string = ''
+    for i in set:
+        string += i[0] + '=' + i[1]
+    file = ReadWrite(fileName)
+    file.overWrite(string)
+
 def importData(fileName):
     file = ReadWrite(fileName)
     data = file.read()

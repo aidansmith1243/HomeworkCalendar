@@ -9,16 +9,18 @@ class prefs:
     def __init__(self):
         self.DATA_FILE = 'settings/data/data.txt'
         self.CLASS_FILE = 'settings/data/classes.txt'
+        self.SETTINGS_FILE = 'settings/settings.txt'
         
         self.MONTH_NAMES = {1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',7:'July',8:'August',9:'September',10:'October',11:'November',12:'December'}
         self.DAY_HEADER = ['SUN','MON','TUE','WED','THU','FRI','SAT']
         self.CLASSES = importClasses(self.CLASS_FILE)
 
-        self.setDarkMode(False)
+        self.setDarkMode(bool(getSetting(self.SETTINGS_FILE, 'PREFS.DARK_MODE')=='True'))
 
     def setDarkMode(self,val):
         self.DARK_MODE = val
         if not self.DARK_MODE:
+            # Regular Mode Colors
             self.COMPLETED_ITEM_TEXT_COLOR = color_rgb(100,100,100)
             self.COMPLETED_ITEM_COLOR = color_rgb(150,150,150)
             
@@ -28,16 +30,15 @@ class prefs:
             self.TODAY_COLOR = color_rgb(230,230,230)
             self.OTHER_MONTH_COLOR = color_rgb(150,150,150)
         else:
-            self.COMPLETED_ITEM_TEXT_COLOR = color_rgb(100,100,100)
-            i=75
-            self.COMPLETED_ITEM_COLOR = color_rgb(i,i,i)
-            i=75
-            self.TODAY_COLOR = color_rgb(i,i,i)
-            i=35
-            self.OTHER_MONTH_COLOR = color_rgb(i,i,i)
-            i=200
-            self.BLACK = color_rgb(i,i,i)
-            self.WHITE = color_rgb(0,0,0)
+            # Dark Mode Colors
+            i = 80;  self.COMPLETED_ITEM_TEXT_COLOR = color_rgb(i,i,i)
+            i = 80;  self.COMPLETED_ITEM_COLOR = color_rgb(i,i,i)
+            
+            i = 80;  self.TODAY_COLOR = color_rgb(i,i,i)
+            i = 0;   self.OTHER_MONTH_COLOR = color_rgb(i,i,i)
+            
+            i = 200; self.BLACK = color_rgb(i,i,i)
+            i = 30;  self.WHITE = color_rgb(i,i,i)
                 
 PREFS = prefs()
                 
