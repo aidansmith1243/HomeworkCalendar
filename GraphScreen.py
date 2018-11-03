@@ -1,6 +1,5 @@
-import Graphics as g
-# from GraphScreen import *
-from Graphics import *
+import library.Graphics as g
+from library.Graphics import *
 from AddItem import *
 from Calendar import *
 from prefs import *

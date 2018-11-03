@@ -1,6 +1,6 @@
-from Graphics import *
-from DateMaker import *
-from ReadWrite import *
+from library.Graphics import *
+from library.DateMaker import *
+from library.ReadWrite import *
 import prefs
 import datetime
 from prefs import *

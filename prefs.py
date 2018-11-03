@@ -1,4 +1,4 @@
-from ReadWrite import *
+from library.ReadWrite import *
 
 def color_rgb(r,g,b):
     """r,g,b are intensities of red, green, and blue in range(256)
@@ -7,8 +7,8 @@ def color_rgb(r,g,b):
 
 class prefs:
     def __init__(self):
-        self.DATA_FILE = 'data/data.txt'
-        self.CLASS_FILE = 'data/classes.txt'
+        self.DATA_FILE = 'settings/data/data.txt'
+        self.CLASS_FILE = 'settings/data/classes.txt'
         
         self.MONTH_NAMES = {1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',7:'July',8:'August',9:'September',10:'October',11:'November',12:'December'}
         self.DAY_HEADER = ['SUN','MON','TUE','WED','THU','FRI','SAT']

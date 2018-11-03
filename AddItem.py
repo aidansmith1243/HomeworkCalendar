@@ -1,10 +1,10 @@
-from Graphics import *
-from ReadWrite import *
+from library.Graphics import *
+from library.ReadWrite import *
 from prefs import *
 import datetime
 
 def addItem(string):
-    file = ReadWrite(DATA_FILE)
+    file = ReadWrite(PREFS.DATA_FILE)
     data = file.write(string+'\n')
 
 class AddItem:
@@ -49,8 +49,8 @@ class AddItem:
         
         self.subjectList = SelectFromList(Point(30,80),175,20,15)
         #classes,colors = importClasses()
-        for i in CLASSES:
-            self.subjectList.add(i,eval(CLASSES[i]))
+        for i in PREFS.CLASSES:
+            self.subjectList.add(i,eval(PREFS.CLASSES[i]))
         
         self.subjectList.draw(screen)
         
@@ -99,12 +99,12 @@ class AddTimedItem(AddItem):
         self.endDate = EntryBox(self.screen,'',5,90,350,False)
 
         self.am_pm_start = SelectFromList(Point(60,350),20,10,10)
-        self.am_pm_start.add("AM",WHITE)
-        self.am_pm_start.add("PM",WHITE)
+        self.am_pm_start.add("AM",PREFS.WHITE)
+        self.am_pm_start.add("PM",PREFS.WHITE)
 
         self.am_pm_end = SelectFromList(Point(140,350),20,10,10)
-        self.am_pm_end.add("AM",WHITE)
-        self.am_pm_end.add("PM",WHITE)
+        self.am_pm_end.add("AM",PREFS.WHITE)
+        self.am_pm_end.add("PM",PREFS.WHITE)
 
         self.startDate.draw(self.screen)
         self.endDate.draw(self.screen)

@@ -1,5 +1,5 @@
 from GraphScreen import *
-from Graphics import *
+from library.Graphics import *
 import time
 
 # Main running for the calendar 
