@@ -296,7 +296,10 @@ class Window(GraphScreen):
     
     def add(self,date = [0,0,0]):
         self.addWin = AddItem(date)
-        self.addWin.run()
+        try:
+            self.addWin.run()
+        except:
+            pass
         self.updateCalendar()
         
     
