@@ -16,3 +16,7 @@ KSTATE
 color_rgb(150,50,255)
 Other
 color_rgb(235,236,236)
+NEW CLASS
+color_rgb(0,213,172)
+Winter Class
+color_rgb(234,192,235)
