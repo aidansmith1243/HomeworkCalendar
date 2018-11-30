@@ -39,6 +39,8 @@ class prefs:
             
             i = 200; self.BLACK = color_rgb(i,i,i)
             i = 30;  self.WHITE = color_rgb(i,i,i)
+    def updateClasses(self):
+        self.CLASSES = importClasses(self.CLASS_FILE)
                 
 PREFS = prefs()
-                
+

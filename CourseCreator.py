@@ -1,5 +1,6 @@
 '''
 Created by Aidan Smith July 2018
+Modified November 2018 for new application
 Version 4
 '''
 from library.Graphics import *
@@ -133,7 +134,7 @@ class CourseCreator:
             if(self.removeBTN.pressed(mouse) or key == 'BackSpace'):
                 name = self.subjectList.getSelected()
                 if name != '':
-                    self.removeCourse(name)
+                    self.removeCourse(name[0])
                 self.screen.autoflush = False
                 self.subjectList.remove(name)
                 self.updateCoursesList()
@@ -147,19 +148,22 @@ class CourseCreator:
 
 
     def createCoursesList(self):
-        classes = PREFS.CLASSES#importClasses()# = self.courses.getClasses()
+        classes = PREFS.CLASSES
         self.subjectList = SelectFromList(Point(0,180),175,20,15)
         for i in classes:
-            self.subjectList.add(i,eval(PREFS.CLASSES[i]))#colors[classes.index(i)])
+            self.subjectList.add(i,eval(PREFS.CLASSES[i]),serial=[i])
         
         self.subjectList.draw(self.screen)
+        
     def updateCoursesList(self):
         self.subjectList.undraw()
+        PREFS.updateClasses()
         self.createCoursesList()
         
     def saveCourse(self,label,color):
         file = ReadWrite(PREFS.CLASS_FILE)
         file.write(label+'\n'+color+'\n')
+        
     def removeCourse(self,label):
         file = ReadWrite(PREFS.CLASS_FILE)
         data = file.read()
