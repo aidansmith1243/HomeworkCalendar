@@ -85,7 +85,12 @@ class AddItem:
                 self.screen.pause()
                 self.subjectList.selectNextItem()
                 self.screen.resume()
-            
+
+            txt = ''
+            for c in self.title.getText():
+                if(ord(c)<123):
+                    txt += c
+            self.title.setText(txt)
             self.screen.resetKey()
         self.screen.close()
         if myStr != '':
