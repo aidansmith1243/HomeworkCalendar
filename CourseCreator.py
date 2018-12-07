@@ -78,7 +78,7 @@ class CourseCreator:
 
         self.createCoursesList()
         self.screen.autoflush = True
-    def running(self):
+    def run(self):
         r = 0
         g = 0
         b = 0
@@ -179,9 +179,3 @@ class CourseCreator:
         for i in data:
             file.write(i)
                 
-x = CourseCreator()
-while True:
-    #try:
-        x.running()
-    #except:
-     #   break

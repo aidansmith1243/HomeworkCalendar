@@ -1006,6 +1006,7 @@ class SelectFromList:
         self.selected = []
         self.selectedLabel = ''
         self.serialList = []
+        self.selectedIndex = -1;
     def __repr__(self):
         return '<SelectFromList('+str(self.topLeftPoint)+', '+str(self.length)+', '+str(self.eachHeight) + ', '+str(self.textSize)+')>'
     def draw(self,screen):
@@ -1025,9 +1026,7 @@ class SelectFromList:
     def add(self,label,color,serial=[],complete = False):
         y = self.topLeftPoint.getY() + (self.numItems * self.eachHeight)
         b = Button(label,self.textSize,Point(self.topLeftPoint.getX(),y),Point(self.topLeftPoint.getX()+self.length,y+self.eachHeight),complete)
-        #b.setTextColor(text)
         q = 75#150
-#         b.setFill(color,color_rgb(q,q,q))
         b.setFill(color, PREFS.COMPLETED_ITEM_COLOR)
         self.list.append(b)
         self.serialList.append(serial)
@@ -1041,11 +1040,6 @@ class SelectFromList:
         for i in self.list:
             y = self.topLeftPoint.getY() + (count * self.eachHeight)
             b = Button(i.getLabel(),self.textSize,Point(self.topLeftPoint.getX(),y),Point(self.topLeftPoint.getX()+self.length,y+self.eachHeight),i.useSecondary)
-            #if not complete:
-                #b.setFill(i.color)
-            #else:
-                #b.setFill(prefs.COMPLETED_ITEM_COLOR)
-#             b.setFill(i.color,color_rgb(q,q,q))
             b.setFill(i.color, PREFS.COMPLETED_ITEM_COLOR)
             b.setTextColor(i.textColor)
             temp.append(b)
@@ -1056,20 +1050,49 @@ class SelectFromList:
         if mouseClick == None or mouseClick.getX() == -1:
             mouseClick = Point(-1,-1)
         else:
+            count = 0
             for i in self.list:
                 if i.pressed(mouseClick):
                     for x in self.list:
                         x.setTextColor(x.textColor)
-                    i.setTextColor(color_rgb(100,100,100),False)
+                    i.setTextColor(color_rgb(125,125,125),False)
                     self.selected = self.serialList[self.list.index(i)]
                     self.selectedLabel = i.getLabel()
+                    self.selectedIndex = count
                     break
+                count +=1
                 
     def uncheckSelected(self):
         self.selected = ''
+        self.selectedLabel = ''
         for i in self.list:
             i.setTextColor(i.textColor)
-                
+    def selectNextItem(self):
+        if(self.selectedIndex < self.numItems-1):
+            self.selectedIndex += 1
+        else:
+            self.selectedIndex = 0
+        
+        i = self.list[self.selectedIndex]
+        for x in self.list:
+            x.setTextColor(x.textColor)
+        i.setTextColor(color_rgb(125,125,125),False)
+        self.selected = self.serialList[self.list.index(i)]
+        self.selectedLabel = i.getLabel()
+        
+    def selectPrevItem(self):
+        if(self.selectedIndex > 0):
+            self.selectedIndex -= 1
+        else:
+            self.selectedIndex = self.numItems-1
+            
+        i = self.list[self.selectedIndex]
+        for x in self.list:
+            x.setTextColor(x.textColor)
+        i.setTextColor(color_rgb(125,125,125),False)
+        self.selected = self.serialList[self.list.index(i)]
+        self.selectedLabel = i.getLabel()
+        
     def getSelected(self):
         return self.selected
       

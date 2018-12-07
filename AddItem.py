@@ -77,7 +77,15 @@ class AddItem:
             if (self.submitBTN.pressed(mouseClick) or key == 'Return') and (len(self.title.getText()) > 1 and self.subjectList.getSelectedLabel() != '' and not "," in self.title.getText()):
                 running = False
                 myStr = self.createOutput()
-                
+            if(key == 'Up'):
+                self.screen.pause()
+                self.subjectList.selectPrevItem()
+                self.screen.resume()
+            if(key == 'Down'):
+                self.screen.pause()
+                self.subjectList.selectNextItem()
+                self.screen.resume()
+            
             self.screen.resetKey()
         self.screen.close()
         if myStr != '':

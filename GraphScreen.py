@@ -3,6 +3,7 @@ from library.Graphics import *
 from AddItem import *
 from Calendar import *
 from prefs import *
+from CourseCreator import *
 import time
 import datetime
 
@@ -264,6 +265,7 @@ class Window(GraphScreen):
         self.addAction('d',self.darkMode)
         self.addAction('Up', self.upWeek)
         self.addAction('Down', self.downWeek)
+        self.addAction('equal', self.changeCourse)
 
     def updateCalendar(self):
         self.win.pause()
@@ -366,7 +368,10 @@ class Window(GraphScreen):
             PREFS.setDarkMode(True)
             setSetting(PREFS.SETTINGS_FILE,'PREFS.DARK_MODE',True)
         self.updateCalendar()
-        
+    def changeCourse(self):
+        temp = CourseCreator()
+        temp.run()
+        self.updateCalendar()
     ''' All Keyboard Button Actions '''
     '''-----------------------------'''
     
