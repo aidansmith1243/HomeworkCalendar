@@ -12,12 +12,12 @@ class CourseCreator:
         #self.courses = listOfCourses
         self.screen = GraphWin("Class Chooser",350,500,autoflush = False)
         self.subjectList = SelectFromList(Point(0,180),175,20,15)
-        
+
         # "Button" objects to check if colors are clicked on
         self.redSlider = Button('',10,Point(0,0),Point(255,50))
         self.greenSlider = Button('',10,Point(0,50),Point(255,100))
         self.blueSlider = Button('',10,Point(0,100),Point(255,150))
-        # Displays the number of the color for each  
+        # Displays the number of the color for each
         self.redLabel = Text(Point(300,25),'0')
         self.greenLabel = Text(Point(300,75),'0')
         self.blueLabel = Text(Point(300,125),'0')
@@ -41,7 +41,7 @@ class CourseCreator:
         self.addBTN.draw(self.screen)
         self.removeBTN = Button('-',20,Point(self.screen.getWidth()-75,self.screen.getHeight()-30),Point(self.screen.getWidth()-50,self.screen.getHeight()))
         self.removeBTN.draw(self.screen)
-        
+
         # Show all objects
         self.redSlider.draw(self.screen)
         self.redLabel.draw(self.screen)
@@ -65,10 +65,10 @@ class CourseCreator:
 
             temp1 = Line(Point(i,50),Point(i,100))
             temp1.setFill(color_rgb(0,i,0))
-            
+
             temp2 = Line(Point(i,100),Point(i,150))
             temp2.setFill(color_rgb(0,0,i))
-            
+
             lines.append(temp)
             lines.append(temp1)
             lines.append(temp2)
@@ -96,7 +96,7 @@ class CourseCreator:
                 self.redLoc = Line(Point(r,0),Point(r,50))
                 self.redLoc.setFill(color_rgb(255,255,255))
                 self.redLoc.draw(self.screen)
-                
+
             if(self.greenSlider.pressed(mouse)):
                 g = int(mouse.getX())
                 self.greenLabel.setText(str(g))
@@ -122,24 +122,24 @@ class CourseCreator:
             if(self.addBTN.pressed(mouse) or key == 'Return'):
                 name = self.entryBox.getText()
                 color = 'color_rgb(' + self.r + ',' + self.g + ','+self.b+')'
-                
+
                 if name != '':
                     self.saveCourse(name,color)
                 self.entryBox.setText('')
                 self.screen.autoflush = False
                 self.updateCoursesList()
                 self.screen.autoflush = True
-                
+
             # remove the selected item from the list
             if(self.removeBTN.pressed(mouse) or key == 'BackSpace'):
                 name = self.subjectList.getSelected()
-                if name != '':
+                if name != []: # If nothing is selected doesn's crash
                     self.removeCourse(name[0])
-                self.screen.autoflush = False
-                self.subjectList.remove(name)
-                self.updateCoursesList()
-                self.screen.autoflush = True
-                
+                    self.screen.autoflush = False
+                    self.subjectList.remove(name)
+                    self.updateCoursesList()
+                    self.screen.autoflush = True
+
             # Close the window
             if(key == 'Escape' or self.exitBTN.pressed(mouse)):
                 run = False
@@ -152,18 +152,18 @@ class CourseCreator:
         self.subjectList = SelectFromList(Point(0,180),175,20,15)
         for i in classes:
             self.subjectList.add(i,eval(PREFS.CLASSES[i]),serial=[i])
-        
+
         self.subjectList.draw(self.screen)
-        
+
     def updateCoursesList(self):
         self.subjectList.undraw()
         PREFS.updateClasses()
         self.createCoursesList()
-        
+
     def saveCourse(self,label,color):
         file = ReadWrite(PREFS.CLASS_FILE)
         file.write(label+'\n'+color+'\n')
-        
+
     def removeCourse(self,label):
         file = ReadWrite(PREFS.CLASS_FILE)
         data = file.read()
@@ -178,4 +178,3 @@ class CourseCreator:
         file.overWrite('')
         for i in data:
             file.write(i)
-                

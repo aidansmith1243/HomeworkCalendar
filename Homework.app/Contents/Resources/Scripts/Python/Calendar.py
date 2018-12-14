@@ -7,24 +7,24 @@ from prefs import *
 
 class Month:
     def __init__(self,month,day,year,topLeftPoint,bottomRightPoint,row = 0):
-        
+
         self.month = month
         self.day = day
         self.year = year
-        
+
         dm = DateMaker()
         self.dates = dm.createYear(year)
         self.row = row
-        
+
         if self.row == 0:
             for r in self.dates:
-                for c in r: 
+                for c in r:
                     if c[0] == month and c[1] == day and c[2] == year:
                         break
                 if c[0] == month and c[1] == day and c[2] == year:
                     break
                 self.row += 1
-            
+
         self.calendar = []
         height = bottomRightPoint.getY() - topLeftPoint.getY()
         x1 = topLeftPoint.getX()
@@ -35,7 +35,7 @@ class Month:
             tempW = []
             tempD = []
             tempY = []
-            
+
             for j in range(7):
                 tempW.append(self.dates[i][j][0])
                 tempD.append(self.dates[i][j][1])
@@ -44,7 +44,7 @@ class Month:
             y1 += height/5
             y2 += height/5
             self.calendar.append(Week(tempW,tempD,tempY,month,Point(x1,y1),Point(x2,y2)))
-            
+
         data = importData(PREFS.DATA_FILE)
         for i in data:
             self.addItem(i)
@@ -54,7 +54,7 @@ class Month:
             x.addItem(i)
     def getRow(self):
         return self.row
-                
+
     def draw(self,win):
         '''
         Draw the Month calendar to the window.
@@ -62,7 +62,7 @@ class Month:
         self.win = win
         for i in self.calendar:
             i.draw(win)
-        
+
     def undraw(self):
         '''
         Undraws all of the month info from the window.
@@ -84,8 +84,8 @@ class Month:
             if temp != '':
                 item = temp
         self.win.resume()
-        return item        
-        
+        return item
+
     def getDayClicked(self,mouse):
         day = [0,0,0]
         for i in self.calendar:
@@ -153,24 +153,27 @@ class Day:
             self.firstLabel = Text(Point((topLeftPoint.getX()+(bottomRightPoint.getX()-topLeftPoint.getX())/2),topLeftPoint.getY()+7),'')
         self.firstLabel.setSize(10)
         self.firstLabel.setTextColor(PREFS.BLACK)
-        
-            
-            
+
+
+
     def addItem(self,i):
         """
         Adds the given item to the list of items for the current day.
         """
         if(i[0] != '/'):
             if(self.day == int(i[2]) and self.month == int(i[1]) and self.year == int(i[3])):
-                if i[-1] != '/':
-                    self.list.add(i[-1], eval(PREFS.CLASSES[i[0]]),i)
-                else:
-                    self.list.add(i[-2], eval(PREFS.CLASSES[i[0]]),i,complete=True)
-                
+                try:
+                    if i[-1] != '/':
+                        self.list.add(i[-1], eval(PREFS.CLASSES[i[0]]),i)
+                    else:
+                        self.list.add(i[-2], eval(PREFS.CLASSES[i[0]]),i,complete=True)
+                except:
+                    pass # Used to deal with classes that are not found
+
     def uncheckSelected(self):
         self.list.uncheckSelected()
     def getSelected(self,mouse):
-        
+
         self.list.checkSelected(mouse)
         t =  self.list.getSelected()
         return t
@@ -187,8 +190,8 @@ class Day:
         """
         self.box.setOutline(PREFS.BLACK)
         self.dayLabel.setTextColor(PREFS.BLACK)
-        
-        
+
+
         self.box.draw(win)
         self.dayLabel.draw(win)
         self.list.draw(win)
@@ -200,8 +203,8 @@ class Day:
         self.list.undraw()
         if(self.day == 1):
             self.firstLabel.undraw()
-        
-        
+
+
 
 def createLegend():
     legend = []
@@ -213,7 +216,7 @@ def createLegend():
         x2 = width + count/3 * width
         y1 = 0 + count%3 * height
         y2 = height + count%3 * height
-        
+
         temp = Button(i,11,Point(x1,y1),Point(x2,y2))
         temp.setFill(eval(PREFS.CLASSES[i]))
         legend.append(temp)
@@ -229,5 +232,5 @@ def createDayHeader():
         temp.setSize(12)
         temp.setTextColor(PREFS.BLACK)
         arr.append(temp)
-        count+=1 
+        count+=1
     return arr
