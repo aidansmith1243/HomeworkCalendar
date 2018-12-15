@@ -370,7 +370,10 @@ class Window(GraphScreen):
         self.updateCalendar()
     def changeCourse(self):
         temp = CourseCreator()
-        temp.run()
+        try:
+            temp.run()
+        except:
+            pass # Exit button pressed
         self.updateCalendar()
     ''' All Keyboard Button Actions '''
     '''-----------------------------'''
