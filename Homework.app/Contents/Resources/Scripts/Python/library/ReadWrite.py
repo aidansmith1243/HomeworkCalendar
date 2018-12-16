@@ -1,3 +1,4 @@
+import datetime
 def importSettings(fileName):
     file = ReadWrite(fileName)
     data = file.read()
@@ -66,7 +67,7 @@ def completeItem(fileName, com):
                 for x in i:
                     temp += x + ','
                 temp += '/,'
-            else: # Removes the completed item signature 
+            else: # Removes the completed item signature
                 for x in range(len(i)-1):
                     temp += i[x] + ','
         else:
@@ -76,7 +77,7 @@ def completeItem(fileName, com):
         newData += temp
     file = ReadWrite(fileName)
     file.overWrite(newData)
-    
+
 def removeItem(fileName, rem):
     data = importData(fileName)
     newData = ''
@@ -91,10 +92,12 @@ def removeItem(fileName, rem):
                 for x in range(len(i)-1):
                     temp += i[x+1] + ','
         else:
-            for x in i:
-                temp += x + ','
-        temp += '\n'
-        newData += temp
+            if i[0] != '/' and int(i[3]) != datetime.datetime.now().year - 2:
+                for x in i:
+                    temp += x + ','
+        if i[0] != '/' and int(i[3]) != datetime.datetime.now().year - 2:
+            temp += '\n'
+            newData += temp
     file = ReadWrite(fileName)
     file.overWrite(newData)
 def addItem(fileName, add):
@@ -108,10 +111,10 @@ def monthConversion(month,year):
     """
     This method will check to see if going to the next or previous month will change the
     year and returns the corrected month and year.
-    
+
     month - the month to see if it is in the same year
     year - the year that you are checking
-    
+
     return month,year - the corrected values of each
     """
     if(month > 12):
@@ -133,7 +136,7 @@ class ReadWrite:
         fileName - The name of the file in the same folder with the extension
         '''
         self.fileName = fileName
-    
+
     def read(self):
         '''
         Reads the data from the file and stores each line in an array.
@@ -144,10 +147,10 @@ class ReadWrite:
         data = file.readlines()
         file.close()
         return data
-    
+
     def write(self,data):
         '''
-        
+
         '''
         file = open(self.fileName,"a+")
         file.write(data)
