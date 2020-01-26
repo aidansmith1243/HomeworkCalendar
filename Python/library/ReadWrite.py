@@ -11,7 +11,7 @@ def getSetting(fileName, setting):
     set = importSettings(fileName)
     for i in set:
         if i[0] == setting:
-            return i[1]
+                return i[1].splitlines()[0]
 def setSetting(fileName,setting,val):
     set = importSettings(fileName)
     for i in set:
