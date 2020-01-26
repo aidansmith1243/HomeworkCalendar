@@ -8,6 +8,7 @@ def color_rgb(r,g,b):
 class prefs:
     def __init__(self):
         self.DATA_FILE = 'settings/data/data.txt'
+        #self.DATA_FILE = "C:\\Users\\Aidan\\OneDrive\\Other\\data.txt"
         self.CLASS_FILE = 'settings/data/classes.txt'
         self.SETTINGS_FILE = 'settings/settings.txt'
         

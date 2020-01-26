@@ -39,7 +39,7 @@ class AddItem:
         self.dateYear = EntryBox(screen,'',5,150,20,False)
         self.dateYear.setText(year)
 
-        self.title = EntryBox(screen,'',28,-21,50,False)
+        self.title = EntryBox(screen,'',24,0,50,False)
 
         self.dateDay.draw(screen)
         self.dateMonth.draw(screen)

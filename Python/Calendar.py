@@ -146,7 +146,7 @@ class Day:
         elif(self.month != viewMonth or self.year != now.year):
             self.box.setFill(PREFS.OTHER_MONTH_COLOR)
         self.dayLabel = Text(Point(bottomRightPoint.getX()-10,topLeftPoint.getY()+8),str(day))
-        self.list = SelectFromList(Point(topLeftPoint.getX(),topLeftPoint.getY()+15),bottomRightPoint.getX()-topLeftPoint.getX(),13,11)
+        self.list = SelectFromList(Point(topLeftPoint.getX(),topLeftPoint.getY()+15),bottomRightPoint.getX()-topLeftPoint.getX(),13,10)
         if(self.day == 1):
             self.firstLabel = Text(Point((topLeftPoint.getX()+(bottomRightPoint.getX()-topLeftPoint.getX())/2),topLeftPoint.getY()+7),PREFS.MONTH_NAMES[month])
         else:
@@ -212,12 +212,12 @@ def createLegend():
     height = 13
     count = 0
     for i in PREFS.CLASSES:
-        x1 = 0 + count/3 * width
-        x2 = width + count/3 * width
+        x1 = 0 + (int)(count/3) * width
+        x2 = width + (int)(count/3) * width
         y1 = 0 + count%3 * height
         y2 = height + count%3 * height
-
-        temp = Button(i,11,Point(x1,y1),Point(x2,y2))
+        
+        temp = Button(i,10,Point(x1,y1),Point(x2,y2))
         temp.setFill(eval(PREFS.CLASSES[i]))
         legend.append(temp)
         count+=1

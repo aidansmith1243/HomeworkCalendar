@@ -73,7 +73,7 @@ class GraphScreen:
                 else:
                     self.items[i].draw(self.win)
             except:
-                print 'ERROR DRAWING ITEM: ' + str(i)
+                print ('ERROR DRAWING ITEM: ' + str(i))
         
         self.win.resume()
         
@@ -96,7 +96,7 @@ class GraphScreen:
                 else:
                     self.items[i].undraw()
             except:
-                print 'ERROR UNDRAWING ITEM: ' + str(i)
+                print ('ERROR UNDRAWING ITEM: ' + str(i))
         
         self.win.resume()
         
@@ -142,7 +142,7 @@ class GraphScreen:
             else:
                 self.items[name].undraw()
         except:
-            print 'ERROR UNDRAWING ITEM: ' + str(x)
+            print ('ERROR UNDRAWING ITEM: ' + str(x))
         self.win.resume()
         
     def drawItem(self,name):
@@ -158,7 +158,7 @@ class GraphScreen:
             else:
                 self.items[name].draw(self.win)
         except:
-            print 'ERROR DRAWING ITEM: ' + str(x)
+            print ('ERROR DRAWING ITEM: ' + str(x))
         self.win.resume()
         
     def checkButtons(self):

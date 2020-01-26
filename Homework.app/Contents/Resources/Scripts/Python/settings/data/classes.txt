@@ -1,6 +1,0 @@
-CIS 090
-color_rgb(100,180,255)
-KSTATE
-color_rgb(150,50,255)
-Other
-color_rgb(235,236,236)

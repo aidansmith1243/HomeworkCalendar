@@ -1,5 +1,5 @@
 # HomeworkCalendar
-This program is designed for keeiping track of homework assignments on a calendar with color coded classes. It is in an application format to run on Mac. To run on other devices take the source files from /Homework.app/Contents/Resources/Scripts/Python/ 
+This program is designed for keeping track of homework assignments on a calendar with color coded classes. 
 
 ## Controls
 Keyboard:
