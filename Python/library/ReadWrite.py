@@ -6,23 +6,40 @@ def importSettings(fileName):
     for i in data:
         temp.append(seperate(i,'='))
     data = temp
+    for i in data:
+        i[-1] = i[-1].strip()
     return data
 def getSetting(fileName, setting):
-    set = importSettings(fileName)
-    for i in set:
+    file = importSettings(fileName)
+    for i in file:
         if i[0] == setting:
-                return i[1].splitlines()[0]
+                return i[1]
+    return ""
 def setSetting(fileName,setting,val):
-    set = importSettings(fileName)
-    for i in set:
+    '''
+    file = importSettings(fileName)
+    for i in file:
         if i[0] == setting:
             i[1] = str(val)
     string = ''
-    for i in set:
+    for i in file:
         string += i[0] + '=' + i[1]
     file = ReadWrite(fileName)
     file.overWrite(string)
-
+    '''
+    file = importSettings(fileName)
+    for i in file:
+        if i[0] == setting:
+            i[1] = str(val)
+    string = ''
+    for i in file:
+        if len(i) > 1:
+            string += i[0] + '=' + i[1] + '\n'
+        else:
+            string += i[0] + '\n'     
+    file = ReadWrite(fileName)
+    file.overWrite(string)
+    
 def importData(fileName):
     file = ReadWrite(fileName)
     data = file.read()
