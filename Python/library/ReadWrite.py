@@ -44,7 +44,7 @@ def importClasses(fileName):
     data = file.read()
     temp = {}
     for i in range(0,len(data),2):
-        temp[data[i][0:-1]] = data[i+1][0:-1]
+        temp[data[i][0:-1].strip()] = data[i+1][0:-1].strip()
     data = temp
     return data
 
