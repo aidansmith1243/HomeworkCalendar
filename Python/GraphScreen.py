@@ -1,11 +1,13 @@
 import library.Graphics as g
 from library.Graphics import *
+from library.ReadWrite import *
 from AddItem import *
 from Calendar import *
 from prefs import *
 from CourseCreator import *
 import time
 import datetime
+from tkinter.filedialog import askopenfilename
 
 def null():
     pass
@@ -175,7 +177,7 @@ class GraphScreen:
             return ''
         self.win.resetKey()
         key = self.win.checkKey()
-
+        
         for i in self.actions:
             if key == i:
                 self.actions[i]()
@@ -266,6 +268,9 @@ class Window(GraphScreen):
         self.addAction('Up', self.upWeek)
         self.addAction('Down', self.downWeek)
         self.addAction('equal', self.changeCourse)
+
+        # Test new button
+        #self.addAction('minus', self.test)
 
     def updateCalendar(self):
         self.win.pause()
@@ -375,6 +380,10 @@ class Window(GraphScreen):
         except:
             pass # Exit button pressed
         self.updateCalendar()
+    def test(self):
+        filename = askopenfilename()
+        setSetting(self.PREFS.SETTINGS_FILE,"CLASS_FILE",filename)
+        self.close()
     ''' All Keyboard Button Actions '''
     '''-----------------------------'''
     

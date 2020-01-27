@@ -1,4 +1,5 @@
 import datetime
+
 def importSettings(fileName):
     file = ReadWrite(fileName)
     data = file.read()
@@ -149,6 +150,7 @@ class ReadWrite:
 
         return - gives an array with each line in a new element.
         '''
+        # Create a new file if there is none found
         try:
             file = open(self.fileName,"r+")
         except:
