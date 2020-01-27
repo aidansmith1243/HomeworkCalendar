@@ -16,17 +16,6 @@ def getSetting(fileName, setting):
                 return i[1]
     return ""
 def setSetting(fileName,setting,val):
-    '''
-    file = importSettings(fileName)
-    for i in file:
-        if i[0] == setting:
-            i[1] = str(val)
-    string = ''
-    for i in file:
-        string += i[0] + '=' + i[1]
-    file = ReadWrite(fileName)
-    file.overWrite(string)
-    '''
     file = importSettings(fileName)
     for i in file:
         if i[0] == setting:
@@ -160,7 +149,13 @@ class ReadWrite:
 
         return - gives an array with each line in a new element.
         '''
-        file = open(self.fileName,"r+")
+        try:
+            file = open(self.fileName,"r+")
+        except:
+            file = open(self.fileName, "w+");
+            file.close()
+            file = open(self.fileName,"r+")
+            
         data = file.readlines()
         file.close()
         return data

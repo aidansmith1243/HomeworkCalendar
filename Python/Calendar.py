@@ -44,11 +44,12 @@ class Month:
             y1 += height/5
             y2 += height/5
             self.calendar.append(Week(tempW,tempD,tempY,month,Point(x1,y1),Point(x2,y2)))
-
-        data = importData(PREFS.DATA_FILE)
-        for i in data:
-            self.addItem(i)
-
+        try: # if there is a data file found in the location it will use it
+            data = importData(PREFS.DATA_FILE)
+            for i in data:
+                self.addItem(i)
+        except: # no data file is located and it will create one in the designated location
+            pass
     def addItem(self,i):
         for x in self.calendar:
             x.addItem(i)

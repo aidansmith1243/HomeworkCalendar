@@ -1,4 +1,4 @@
-PREFS.DARK_MODE=False
+PREFS.DARK_MODE=True
 
 DATA_FILE=settings/data/data.txt
 C:/Users/Aidan/OneDrive/Other/data.txt
