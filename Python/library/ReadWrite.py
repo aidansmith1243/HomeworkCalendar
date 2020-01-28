@@ -92,9 +92,11 @@ def removeItem(fileName, rem):
         temp = ''
         if(i == rem):
             if i[0] != '/':
+                '''
                 temp += '/,'
                 for x in i:
                     temp += x + ','
+                    '''
             else: # Will re-add the item if I want to add this later
                 for x in range(len(i)-1):
                     temp += i[x+1] + ','
