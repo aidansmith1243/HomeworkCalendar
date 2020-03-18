@@ -20,6 +20,12 @@ class Calendar:
                 return count
             count += 1
         return -1
+    def GetCurrentViewMonth(self,month,year):
+        index = self.GetMonthIndex(month,year)
+        temp = []
+        for i in range(index,index + 6):
+            temp.append(self.CalendarDateList[i])
+        return temp
     def CreateCalendar(year):
         import calendar
         import DataClasses

@@ -25,9 +25,3 @@ class Class:
     def __init__(self,name, color):
         self.Name = name
         self.Color = color
-
-class RGBColor:
-    def __init__(self,r,g,b):
-        self.Red = r
-        self.Green = g
-        self.Blue = b

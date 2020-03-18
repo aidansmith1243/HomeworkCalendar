@@ -1,8 +1,9 @@
 import DataClasses
+from Calendar import Calendar
 import pickle
 class Model:
     def __init__(self,saveFile):
-        self.Calendar = None
+        self.Calendar = Calendar()
         self.Classes = []
         self.SaveFile = saveFile
     def AddClass(self,c):
