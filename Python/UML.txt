@@ -1,0 +1,35 @@
+UML for Homework Calendar
+
+Date
+- day
+- month
+- year
+
+DailyItem
+- name: string
+- date: Date
+- class: Class
+- Completed: bool
+
+Class
+- color: RGBColor
+- name: string
+
+RGBColor
+- r: int
+- g: int
+- b: int
+
+
+Calendar
+
+
+Model
+- Items: list of DailyItems
+- Calendar:
+
+GUI
+-----------
+
+
+Controller

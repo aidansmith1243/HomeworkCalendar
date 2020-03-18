@@ -1,9 +1,0 @@
-PREFS.DARK_MODE=True
-
-DATA_FILE=settings/data/data.txt
-settings/data/data.txt
-C:/Users/Aidan/OneDrive/Other/data.txt
-
-CLASS_FILE=settings/data/classes.txt
-settings/data/classes.txt
-C:/Users/Aidan/OneDrive/Other/data.txt
