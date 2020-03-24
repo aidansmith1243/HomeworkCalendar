@@ -9,7 +9,10 @@ class Model:
     def AddClass(self,c):
         self.Classe.append(c)
     def RemoveClass(self,c):
-        pass
+        try:
+            self.Classes.remove(c)
+        except:
+            pass
     def Save(self):
         '''
         Saves the current state of this object to the SaveFile as binary

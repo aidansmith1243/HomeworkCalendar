@@ -11,16 +11,22 @@ class Day:
     def AddItem(self,item):
         self.Items.append(item)
     def RemoveItem(self,item):
-        self.Items.remove(item)
+        try:
+            if self.Items != []:
+                print(self.Items[0])
+            self.Items.remove(item)
+        except:
+            pass
+
     def CompleteItem(self,item):
         item.Completeed = not item.Completed
 
 class DailyItem:
     def __init__(self,name,c):
-        self.Name = Name
+        self.Name = name
         self.Class = c
         self.Completed = False
-
+    
 class Class:
     def __init__(self,name, color):
         self.Name = name
