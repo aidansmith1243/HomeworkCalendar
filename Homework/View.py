@@ -139,6 +139,7 @@ class AddItem:
                     if i.pressed(mouse):
                         selected = self.Classes[i]
                         running = False
+            time.sleep(.1)
         self.undraw()
         return self.Entry.getText(),selected
 

@@ -13,8 +13,6 @@ class Control:
         if self.Model == None:
             self.Model = Model("data.txt")
 
-        
-
         self.View = View(self.Model)
 
         self.View.draw()
