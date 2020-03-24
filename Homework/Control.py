@@ -22,7 +22,8 @@ class Control:
         key = self.View.CheckKey()
         if key != '':
             if key == 'Escape':
-                self.Running = False
+                pass
+                #self.Running = False
             elif key == 'Down':
                 self.View.ViewNextMonth()
                 self.View.Update()
@@ -34,7 +35,6 @@ class Control:
         clicked = self.View.CheckMouse()
         if clicked != None:
             if isinstance(clicked, GridBox):
-                #clicked.Data.AddItem(DataClasses.DailyItem(str(random.random()),DataClasses.Class('Done',Graphics.color_rgb(255,0,0))))
                 name,tempClass = self.View.AddItem()
                 if tempClass != None:
                     clicked.Data.AddItem(DataClasses.DailyItem(name,tempClass))

@@ -180,10 +180,19 @@ class GridBox:
         return tl.getY() < point.getY() < tl.getY() + 15 and br.getX() > point.getX() > br.getX() - 15
 
     def draw(self,win):
-        self.Rectangle.draw(win)
+        
         if(self.Label.getText() == '0'):
             self.Label.undraw()
+            self.Rectangle.setFill(Graphics.color_rgb(100,100,100))
+            self.Rectangle.draw(win)
         else:
+            n = datetime.now()
+            d = self.Data.Date
+            if d.Day == n.day and d.Year == n.year and d.Month == n.month:
+                self.Rectangle.setFill(Graphics.color_rgb(180,180,180))
+            else:
+                self.Rectangle.setFill(Graphics.color_rgb(255,255,255))
+            self.Rectangle.draw(win)
             self.Label.draw(win)
         for i in self.Items:
             i.draw(win)
