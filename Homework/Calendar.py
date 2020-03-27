@@ -1,8 +1,8 @@
 class Calendar:
     def __init__(self):
         import datetime
-
-        self.FinalYear = datetime.datetime.now().year
+        self.StartYear = datetime.datetime.now().year
+        self.FinalYear = self.StartYear
         self.CalendarDateList = Calendar.CreateCalendar(self.FinalYear)
     def AddYear(self):
         import DataClasses

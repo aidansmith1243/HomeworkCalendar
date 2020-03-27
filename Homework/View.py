@@ -61,14 +61,19 @@ class View:
         if self.ViewMonth > 12:
             self.ViewYear += 1
             self.ViewMonth = 1
+        if self.ViewYear+1 > self.Model.Calendar.FinalYear:
+            self.Model.Calendar.AddYear()
         self.LinkData()
 
     def ViewPrevMonth(self):
-        self.undraw() 
+        self.undraw()
         self.ViewMonth -= 1
         if self.ViewMonth < 1:
             self.ViewYear -= 1
             self.ViewMonth = 12
+            if self.ViewYear < self.Model.Calendar.StartYear:
+                self.ViewNextMonth()
+                return
         self.LinkData()
 
     def LinkData(self):
@@ -78,6 +83,7 @@ class View:
             for j in self.Model.Calendar.CalendarDateList[i]:
                 self.Grid[count].SetData(j)
                 count+= 1
+
 
     def Update(self):
         self.undraw()

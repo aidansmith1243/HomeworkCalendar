@@ -7,7 +7,7 @@ class Model:
         self.Classes = []
         self.SaveFile = saveFile
     def AddClass(self,c):
-        self.Classe.append(c)
+        self.Classes.append(c)
     def RemoveClass(self,c):
         try:
             self.Classes.remove(c)
@@ -27,11 +27,16 @@ class Model:
 
         :return: the new Calendar object
         '''
-        file = open(file,'rb')
-        fileContents = file.read()
-        temp = pickle.loads(fileContents)
-        if isinstance(temp,Model):
-            return temp
-        else:
-            print('ERROR Loading file')
+        try:
+            file = open(file,'rb')
+            fileContents = file.read()
+            temp = pickle.loads(fileContents)
+            if isinstance(temp,Model):
+                return temp
+            else:
+                print('ERROR Loading file')
+                return None
+        except:
+            print("ERROR finding file")
             return None
+

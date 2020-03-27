@@ -9,10 +9,23 @@ from datetime import datetime
 class Control:
     def __init__(self):
         self.Running = True
-        self.Model = Model.Import("data.txt")
+        self.Model = Model.Import("data")
         if self.Model == None:
-            self.Model = Model("data.txt")
-
+            self.Model = Model("data")
+        '''
+        colors = {}
+        colors['Purple'] = Graphics.color_rgb(153,51,255)
+        colors['Red'] = Graphics.color_rgb(255,51,51)
+        colors['Grey'] = Graphics.color_rgb(192,192,192)
+        colors['Blue'] = Graphics.color_rgb(51,51,255)
+        colors['Green'] = Graphics.color_rgb(0,204,0)
+        colors['Yellow'] = Graphics.color_rgb(255,255,51)
+        colors['Orange'] = Graphics.color_rgb(255,128,0)
+        self.Model.AddClass(DataClasses.Class("ENGL 200",colors['Green']))
+        self.Model.AddClass(DataClasses.Class("STAT 510",colors['Red']))
+        self.Model.AddClass(DataClasses.Class("CIS 450",colors['Blue']))
+        self.Model.AddClass(DataClasses.Class("CIS 501",colors['Purple']))
+        '''
         self.View = View(self.Model)
 
         self.View.draw()
@@ -32,7 +45,7 @@ class Control:
     def CheckMouse(self):
         clicked = self.View.CheckMouse()
         if clicked != None:
-            if isinstance(clicked, GridBox):
+            if isinstance(clicked, GridBox) and clicked.Data.Date.Day != 0:
                 name,tempClass = self.View.AddItem()
                 if tempClass != None:
                     clicked.Data.AddItem(DataClasses.DailyItem(name,tempClass))
