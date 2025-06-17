@@ -9,60 +9,62 @@ import time
 import datetime
 from tkinter.filedialog import askopenfilename
 
+
 def null():
     pass
 
+
 class GraphScreen:
-    '''
+    """
     This class is used as a template for easy creation of graphic
     applets
-    '''
-    
-    def __init__(self,name,width,height):
-        '''
+    """
+
+    def __init__(self, name, width, height):
+        """
         For any sub classes use "GraphScreen.__init__(self)" to
         initiate variables
-        '''
+        """
         self.isOpen = False
         self.items = {}
         self.actions = {}
-        
+
         self.g = g
-        self.win = g.GraphWin(name,width,height)
+        self.win = g.GraphWin(name, width, height)
         self.win.setBackground(PREFS.WHITE)
-        
+
     def __str__(self):
-        return str([self.isOpen,self.items,self.actions])
-    
-    def open(self):#,name,height,width):
-        '''
+        return str([self.isOpen, self.items, self.actions])
+
+    def open(self):  # ,name,height,width):
+        """
         Generates and opens the window with all items drawn on screen
-        '''
+        """
         if self.isOpen:
-            return;
+            return
         self.isOpen = True
-        
+
         self.draw()
 
     def isRunning(self):
         return self.isOpen
-    
+
     def close(self):
-        '''
+        """
         Closes the graphic window and changes isOpen to False
-        '''
+        """
         self.win.close()
         self.isOpen = False
-        
-    def draw(self,x=0):
-        '''
+
+    def draw(self, x=0):
+        """
         Draws every item in "items" to the window
 
         x - Does nothing, only used to match the method from other
         classes
-        '''
+        """
         self.win.pause()
-        #print self.items
+        # print self.items
         for i in self.items:
             try:
                 if type(self.items[i]) == list:
@@ -75,15 +77,14 @@ class GraphScreen:
                 else:
                     self.items[i].draw(self.win)
             except:
-                print ('ERROR DRAWING ITEM: ' + str(i))
-        
+                print("ERROR DRAWING ITEM: " + str(i))
+
         self.win.resume()
-        
 
     def undraw(self):
-        '''
+        """
         Undraws every item in items from the window
-        '''
+        """
         self.win.pause()
 
         for i in self.items:
@@ -98,40 +99,44 @@ class GraphScreen:
                 else:
                     self.items[i].undraw()
             except:
-                print ('ERROR UNDRAWING ITEM: ' + str(i))
-        
+                print("ERROR UNDRAWING ITEM: " + str(i))
+
         self.win.resume()
-        
+
     def run(self):
-        '''
+        """
         Overwrite in sub class to complete main functions
-        '''
+        """
         if self.isOpen:
             pass
+
     def createItems(self):
-        '''
+        """
         Overwrite in sub class and call during constructor to generate
         all of the items
-        '''
+        """
         pass
-    def addAction(self,key,method = null):
-        '''
+
+    def addAction(self, key, method=null):
+        """
         Creates an action for when the key is pressed it will
         complete the method given otherwise will only give the key
         name.
-        
+
         Currently only works for the keyboard
-        '''
+        """
         self.actions[key] = method
-    def addItem(self,name,item):
-        '''
+
+    def addItem(self, name, item):
+        """
         Add the graphic item to the collection
-        '''
+        """
         self.items[name] = item
-    def removeItem(self,name):
+
+    def removeItem(self, name):
         del self.items[name]
-        
-    def undrawItem(self,name):
+
+    def undrawItem(self, name):
         self.win.pause()
         try:
             if type(self.items[name]) == list:
@@ -144,10 +149,10 @@ class GraphScreen:
             else:
                 self.items[name].undraw()
         except:
-            print ('ERROR UNDRAWING ITEM: ' + str(x))
+            print("ERROR UNDRAWING ITEM: " + str(x))
         self.win.resume()
-        
-    def drawItem(self,name):
+
+    def drawItem(self, name):
         self.win.pause()
         try:
             if type(self.items[name]) == list:
@@ -160,11 +165,11 @@ class GraphScreen:
             else:
                 self.items[name].draw(self.win)
         except:
-            print ('ERROR DRAWING ITEM: ' + str(x))
+            print("ERROR DRAWING ITEM: " + str(x))
         self.win.resume()
-        
+
     def checkButtons(self):
-        '''
+        """
         Called in the main loop to check if buttons or the mouse
         has been pressed
 
@@ -172,22 +177,23 @@ class GraphScreen:
                 - string title in "actions" to be used if needed
 
         Currently only works for the keyboard
-        '''
+        """
         if not self.isOpen:
-            return ''
+            return ""
         self.win.resetKey()
         key = self.win.checkKey()
-        
+
         for i in self.actions:
             if key == i:
                 self.actions[i]()
                 return i
 
-        return ''
-        
+        return ""
+
+
 class Window(GraphScreen):
-    def __init__(self,name,width,height):
-        GraphScreen.__init__(self,name,width,height)
+    def __init__(self, name, width, height):
+        GraphScreen.__init__(self, name, width, height)
 
         # Variables
         self.now = datetime.datetime.now()
@@ -196,87 +202,103 @@ class Window(GraphScreen):
         self.day = self.now.day
 
         self.addItemWin = False
-        self.newItem = ''
-        
+        self.newItem = ""
+
         self.height = height
         self.width = width
-        
+
         self.savedItem = []
         self.selectedItem = []
         self.dayClicked = []
 
         self.lastTime = time.time()
-        self.lastMouse = Point(-1,-1)
+        self.lastMouse = Point(-1, -1)
 
         self.row = -1
-        
-        self.createActions()        
+
+        self.createActions()
         self.createItems()
         self.updateCalendar()
-        
-        
+
     def run(self):
         if self.isOpen:
             mouse = self.win.checkMouse()
-            
+
             # Remove any previous selected daily items
-            if mouse.getX() != -1 and mouse.getY()!= -1:
+            if mouse.getX() != -1 and mouse.getY() != -1:
                 self.calendar.uncheckSelected()
-                
-                # Add a new item to the calendar when double click on a day  
+
+                # Add a new item to the calendar when double click on a day
                 self.dayClicked = self.calendar.getDayClicked(mouse)
                 # Double clicking to add an item
-                if(time.time() - self.lastTime < .4):
+                if time.time() - self.lastTime < 0.4:
                     addDay = self.calendar.getDayClicked(self.lastMouse)
-                    addDay2 = self.calendar.getDayClicked(mouse) 
-                    if(addDay == addDay2 and addDay != []):
-                        self.add(addDay)    
+                    addDay2 = self.calendar.getDayClicked(mouse)
+                    if addDay == addDay2 and addDay != []:
+                        self.add(addDay)
                 self.lastMouse = mouse
                 self.lastTime = time.time()
-                
+
             # Select an item if it is clicked
             self.selectedItem = self.calendar.getSelected(mouse)
-            
 
         return self.isOpen
-    
+
     def createItems(self):
-        if self.row == -1: # Creates the view starting at the current day.
-            self.calendar = Month(self.month,self.day,self.year,Point(0,60),Point(self.width,self.height))
+        if self.row == -1:  # Creates the view starting at the current day.
+            self.calendar = Month(
+                self.month,
+                self.day,
+                self.year,
+                Point(0, 60),
+                Point(self.width, self.height),
+            )
             self.row = self.calendar.getRow()
         else:
-            self.calendar = Month(self.month,self.day,self.year,Point(0,60),Point(self.width,self.height),self.row)
-            
-        self.title = Text(Point(self.width/2,25),str(PREFS.MONTH_NAMES[self.calendar.dates[self.row+1][3][0]]) + " " + str(self.calendar.dates[self.row+1][3][2]))
+            self.calendar = Month(
+                self.month,
+                self.day,
+                self.year,
+                Point(0, 60),
+                Point(self.width, self.height),
+                self.row,
+            )
+
+        self.title = Text(
+            Point(self.width / 2, 25),
+            str(PREFS.MONTH_NAMES[self.calendar.dates[self.row + 1][3][0]])
+            + " "
+            + str(self.calendar.dates[self.row + 1][3][2]),
+        )
         self.title.setSize(25)
         self.title.setTextColor(PREFS.BLACK)
         self.header = createDayHeader()
         self.legend = createLegend()
-        
+
     def createActions(self):
-        self.addAction('Escape',self.close)
-        self.addAction('space',self.add)
-        self.addAction('BackSpace',self.remove)
-        self.addAction('Return',self.complete)
-        self.addAction('t',self.viewToday)
-        self.addAction('v',self.paste)
-        self.addAction('c',self.copy)
-        self.addAction('x',self.cut)
-        self.addAction('Right',self.nextMonth)
-        self.addAction('Left',self.prevMonth)
-        self.addAction('d',self.darkMode)
-        self.addAction('Up', self.upWeek)
-        self.addAction('Down', self.downWeek)
-        self.addAction('equal', self.changeCourse)
+        self.addAction("Escape", self.close)
+        self.addAction("space", self.add)
+        self.addAction("BackSpace", self.remove)
+        self.addAction("Return", self.complete)
+        self.addAction("t", self.viewToday)
+        self.addAction("v", self.paste)
+        self.addAction("c", self.copy)
+        self.addAction("x", self.cut)
+        self.addAction("Right", self.nextMonth)
+        self.addAction("Left", self.prevMonth)
+        self.addAction("d", self.darkMode)
+        self.addAction("Up", self.upWeek)
+        self.addAction("Down", self.downWeek)
+        self.addAction("equal", self.changeCourse)
 
         # Test new button
-        #self.addAction('minus', self.test)
+        # self.addAction('minus', self.test)
 
     def updateCalendar(self):
         self.win.pause()
-        
+
         self.win.setBackground(PREFS.WHITE)
-        
+
         # undraw Items
         self.calendar.undraw()
         self.title.undraw()
@@ -284,10 +306,10 @@ class Window(GraphScreen):
             i.undraw()
         for i in self.legend:
             i.undraw()
-        
+
         # update items
         self.createItems()
-        
+
         # redraw Items
         self.calendar.draw(self.win)
         self.title.draw(self.win)
@@ -295,37 +317,36 @@ class Window(GraphScreen):
             i.draw(self.win)
         for i in self.legend:
             i.draw(self.win)
-            
+
         self.win.resume()
 
-    '''-----------------------------'''
-    ''' All Keyboard Button Actions '''
-    
-    def add(self,date = [0,0,0]):
+    """-----------------------------"""
+    """ All Keyboard Button Actions """
+
+    def add(self, date=[0, 0, 0]):
         self.addWin = AddItem(date)
         try:
             self.addWin.run()
         except:
             pass
         self.updateCalendar()
-        
-    
+
     def remove(self):
         removeItem(PREFS.DATA_FILE, self.selectedItem)
         self.updateCalendar()
-        
+
     def complete(self):
         completeItem(PREFS.DATA_FILE, self.selectedItem)
         self.updateCalendar()
-        
+
     def viewToday(self):
         self.year = self.now.year
         self.month = self.now.month
         self.row = -1
         self.updateCalendar()
-        
+
     def paste(self):
-        #Fix
+        # Fix
         if len(self.savedItem) > 0:
             temp = self.savedItem
             temp[1] = str(self.dayClicked[0])
@@ -333,59 +354,62 @@ class Window(GraphScreen):
             temp[3] = str(self.dayClicked[2])
             addItem(PREFS.DATA_FILE, temp)
             self.updateCalendar()
-        
+
     def cut(self):
         self.savedItem = self.selectedItem
         self.remove()
         self.updateCalendar()
-        
+
     def copy(self):
         self.savedItem = self.selectedItem
-        
+
     def nextMonth(self):
-        #self.month,self.year = monthConversion(self.month+1, self.year)
+        # self.month,self.year = monthConversion(self.month+1, self.year)
         self.row += 4
-        if(self.row > len(self.calendar.dates)-8):
-            self.row = len(self.calendar.dates)-8
-        self.updateCalendar()    
-        
+        if self.row > len(self.calendar.dates) - 8:
+            self.row = len(self.calendar.dates) - 8
+        self.updateCalendar()
+
     def prevMonth(self):
-        #self.month,self.year = monthConversion(self.month-1, self.year)
+        # self.month,self.year = monthConversion(self.month-1, self.year)
         self.row -= 4
-        if(self.row < 5):
+        if self.row < 5:
             self.row = 5
         self.updateCalendar()
+
     def upWeek(self):
-        self.row -=1
-        if(self.row < 5):
+        self.row -= 1
+        if self.row < 5:
             self.row = 5
         self.updateCalendar()
+
     def downWeek(self):
-        self.row +=1
-        if(self.row > len(self.calendar.dates)-8):
-            self.row = len(self.calendar.dates)-8
+        self.row += 1
+        if self.row > len(self.calendar.dates) - 8:
+            self.row = len(self.calendar.dates) - 8
         self.updateCalendar()
+
     def darkMode(self):
         if PREFS.DARK_MODE:
             PREFS.setDarkMode(False)
-            setSetting(PREFS.SETTINGS_FILE,'PREFS.DARK_MODE',False)
+            setSetting(PREFS.SETTINGS_FILE, "PREFS.DARK_MODE", False)
         else:
             PREFS.setDarkMode(True)
-            setSetting(PREFS.SETTINGS_FILE,'PREFS.DARK_MODE',True)
+            setSetting(PREFS.SETTINGS_FILE, "PREFS.DARK_MODE", True)
         self.updateCalendar()
+
     def changeCourse(self):
         temp = CourseCreator()
         try:
             temp.run()
         except:
-            pass # Exit button pressed
+            pass  # Exit button pressed
         self.updateCalendar()
+
     def test(self):
         filename = askopenfilename()
-        setSetting(self.PREFS.SETTINGS_FILE,"CLASS_FILE",filename)
+        setSetting(self.PREFS.SETTINGS_FILE, "CLASS_FILE", filename)
         self.close()
-    ''' All Keyboard Button Actions '''
-    '''-----------------------------'''
-    
 
-
+    """ All Keyboard Button Actions """
+    """-----------------------------"""
