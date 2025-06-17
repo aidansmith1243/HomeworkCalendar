@@ -1,4 +1,5 @@
 import datetime
+import os
 
 def importSettings(fileName):
     file = ReadWrite(fileName)
@@ -18,9 +19,13 @@ def getSetting(fileName, setting):
     return ""
 def setSetting(fileName,setting,val):
     file = importSettings(fileName)
+    found = False
     for i in file:
         if i[0] == setting:
             i[1] = str(val)
+            found = True
+    if not found:
+        file.append([setting, str(val)])
     string = ''
     for i in file:
         if len(i) > 1:
@@ -145,6 +150,9 @@ class ReadWrite:
         fileName - The name of the file in the same folder with the extension
         '''
         self.fileName = fileName
+        folder = os.path.dirname(os.path.abspath(self.fileName))
+        if folder and not os.path.exists(folder):
+            os.makedirs(folder)
 
     def read(self):
         '''
@@ -156,7 +164,7 @@ class ReadWrite:
         try:
             file = open(self.fileName,"r+")
         except:
-            file = open(self.fileName, "w+");
+            file = open(self.fileName, "w+")
             file.close()
             file = open(self.fileName,"r+")
             
